@@ -16,7 +16,7 @@ func detectFormat() string {
 }
 
 var ExtractCmd = &cobra.Command{
-	Use:   "extract",
+	Use:   "x",
 	Short: "extracts files.",
 	Long:  `extracts a file.`,
 	Run: func(cmd *cobra.Command, args []string) {
