@@ -14,7 +14,10 @@ var rootCmd = &cobra.Command{
 	Short: "A tiny archive extractor.",
 	Long:  "A tiny archive extractor that supports zip, 7z, rar, tar and tar.gz files.",
 	Run: func(cmd *cobra.Command, args []string) {
-		panic("Not implemented yet.")
+		if len(args) == 0 {
+			cmd.Help()
+			os.Exit(0)
+		}
 	},
 }
 

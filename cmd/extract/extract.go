@@ -16,13 +16,13 @@ func init() {
 func detectFormat(archive string) (string, error) {
 	switch {
 	case strings.HasSuffix(archive, ".zip"):
-		return "zip", nil
-	case strings.HasSuffix(archive, ".tar.gz"):
-		return "tar", nil
+		return "Extracted Zip File", extractZip(archive)
+	// case strings.HasSuffix(archive, ".tar.gz"):
+	// 	return "tar", nil
 	case strings.HasSuffix(archive, ".7z"):
-		return "7z", nil
-	case strings.HasSuffix(archive, ".rar"):
-		return "rar", nil
+		return "Extracted Zip File", extractSevenZip(archive)
+		// case strings.HasSuffix(archive, ".rar"):
+		// 	return "rar", nil
 	}
 	return "", errors.New("unsupported archive format")
 }
@@ -33,7 +33,7 @@ var ExtractCmd = &cobra.Command{
 	Short: "extracts files.",
 	Long:  `extracts a file.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		msg, err := extractZip(args[0])
+		msg, err := detectFormat(args[0])
 		if err != nil {
 			panic(err)
 		}

@@ -2,25 +2,19 @@ package extract
 
 import (
 	"archive/zip"
-	"errors"
 	"fmt"
 	"io"
-	"log"
 	"os"
 	"path/filepath"
 
 	"github.com/spf13/cobra"
 )
 
-func extractZip(file string) (string, error) {
-	format, _ := detectFormat(file)
-	if format != "zip" {
-		return "", errors.New(file + " is not correct Archive Format.")
-	}
+func extractZip(file string) error {
 
 	archive, err := zip.OpenReader(file)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer archive.Close()
 
@@ -36,7 +30,7 @@ func extractZip(file string) (string, error) {
 			fmt.Println("creating directory...")
 			err := os.MkdirAll(f.Name, os.ModePerm)
 			if err != nil {
-				panic(err)
+				return err
 			}
 			continue
 		}
@@ -44,29 +38,29 @@ func extractZip(file string) (string, error) {
 		// Create the parent directory if it doesn't exist
 		err := os.MkdirAll(filepath.Dir(f.Name), os.ModePerm)
 		if err != nil {
-			panic(err)
+			return err
 		}
 
 		// // Create an empty destination file
 		dstFile, err := os.OpenFile(f.Name, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
 		if err != nil {
-			panic(err)
+			return err
 		}
 		defer dstFile.Close()
 
 		// Open the file in the zip and copy its contents to the destination file
 		srcFile, err := f.Open()
 		if err != nil {
-			panic(err)
+			return err
 		}
 		defer srcFile.Close()
 
 		_, err = io.Copy(dstFile, srcFile)
 		if err != nil {
-			panic(err)
+			return err
 		}
 	}
-	return "Extracted zip file", nil
+	return nil
 }
 
 var zipCmd = &cobra.Command{
@@ -74,11 +68,11 @@ var zipCmd = &cobra.Command{
 	Short: "extracts zip files.",
 	Long:  `extracts zip files.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		msg, err := extractZip(args[0])
+		err := extractZip(args[0])
 		if err != nil {
 			panic(err)
 		}
-		fmt.Println(msg)
+		fmt.Printf("Extracted %s\n", args[0])
 	},
 }
 
