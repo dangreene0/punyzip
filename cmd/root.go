@@ -5,7 +5,6 @@ import (
 	"os"
 
 	"github.com/dangreene0/punyzip/cmd/extract"
-
 	"github.com/spf13/cobra"
 )
 
@@ -18,12 +17,18 @@ var rootCmd = &cobra.Command{
 			cmd.Help()
 			os.Exit(0)
 		}
+		msg, err := extract.DetectFormat(args[0])
+		if err != nil {
+			fmt.Println(err.Error())
+			os.Exit(0)
+		}
+		fmt.Println(msg)
+
 	},
 }
 
 func init() {
 	rootCmd.CompletionOptions.DisableDefaultCmd = true
-	rootCmd.AddCommand(extract.ExtractCmd)
 }
 
 func Execute() {

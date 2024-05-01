@@ -1,2 +1,2 @@
 #!/bin/bash
-go build -o pz .
+go build -ldflags "-s -w" -o pz .

@@ -6,11 +6,9 @@ import (
 	"io"
 	"os"
 	"path/filepath"
-
-	"github.com/spf13/cobra"
 )
 
-func extractZip(file string) error {
+func ExtractZip(file string) error {
 
 	archive, err := zip.OpenReader(file)
 	if err != nil {
@@ -61,21 +59,4 @@ func extractZip(file string) error {
 		}
 	}
 	return nil
-}
-
-var zipCmd = &cobra.Command{
-	Use:   "zip",
-	Short: "extracts zip files.",
-	Long:  `extracts zip files.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		err := extractZip(args[0])
-		if err != nil {
-			panic(err)
-		}
-		fmt.Printf("Extracted %s\n", args[0])
-	},
-}
-
-func init() {
-	ExtractCmd.AddCommand(zipCmd)
 }
