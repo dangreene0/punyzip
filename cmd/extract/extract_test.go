@@ -9,23 +9,23 @@ func TestDetectFormat(t *testing.T) {
 		input    string
 		expected string
 	}{
-		{"archive.tar.gz", "tar"},
-		{"archive.7z", "7z"},
-		{"archive.rar", "rar"},
-		{"archive.bz2", ""},
-		{"archive.zip", "zip"},
-		{"archive.zip.exe", ""},
-		{"archive.exe.zip", "zip"},
-		{"archive.tar.zip", "zip"},
-		{"zip.zip", "zip"},
-		{"zip.7z", "7z"},
-		{"archive.jpg", ""},
-		{"archive.png", ""},
-		{"archive", ""},
+		{"examples/archive.tar.gz", "Extracted Tar File"},
+		{"examples/archive.7z", "Extracted 7Zip File"},
+		{"examples/archive.rar", "Extracted RAR File"},
+		{"examples/archive.bz2", ""},
+		{"examples/archive.zip", "Extracted Zip File"},
+		{"examples/archive.zip.exe", ""},
+		{"examples/archive.exe.zip", "Extracted Zip File"},
+		{"examples/archive.tar.zip", "Extracted Zip File"},
+		{"examples/zip.zip", "Extracted Zip File"},
+		{"examples/zip.7z", "Extracted 7Zip File"},
+		{"examples/archive.jpg", ""},
+		{"examples/archive.png", ""},
+		{"examples/archive", ""},
 	}
 
 	for _, testCase := range testCases {
-		got, _ := detectFormat(testCase.input)
+		got, _ := DetectFormat(testCase.input)
 
 		if testCase.expected != got {
 			t.Errorf("Expected %q, got %q", testCase.expected, got)
