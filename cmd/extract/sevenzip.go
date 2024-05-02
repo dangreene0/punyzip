@@ -1,22 +1,23 @@
 package extract
 
 import (
-	"archive/zip"
 	"fmt"
 	"io"
 	"os"
 	"path/filepath"
+
+	"github.com/bodgit/sevenzip"
 )
 
-func ExtractZip(archive string) error {
-	r, err := zip.OpenReader(archive)
+func ExtractSevenZip(archive string) error {
+	r, err := sevenzip.OpenReader(archive)
 	if err != nil {
 		return err
 	}
 	defer r.Close()
 
 	for _, f := range r.File {
-		if err = extractZFile(f); err != nil {
+		if err = extractSZFile(f); err != nil {
 			return err
 		}
 	}
@@ -24,7 +25,7 @@ func ExtractZip(archive string) error {
 	return nil
 }
 
-func extractZFile(file *zip.File) error {
+func extractSZFile(file *sevenzip.File) error {
 
 	if file.FileInfo().IsDir() {
 		// Create the directory
@@ -48,8 +49,7 @@ func extractZFile(file *zip.File) error {
 	}
 	defer srcFile.Close()
 
-	// set it to extract back in it's folder
-	// Create an empty destination file
+	// // Create an empty destination file
 	dstFile, err := os.OpenFile(file.Name, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, file.Mode())
 	if err != nil {
 		return err

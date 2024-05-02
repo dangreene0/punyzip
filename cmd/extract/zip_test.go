@@ -12,6 +12,7 @@ func TestExtractZip(t *testing.T) {
 		expected []string
 	}{
 		{"examples/archive.zip", []string{"baby_slime.png", "go_piece.jpg", "gopher.png"}},
+		{"examples/archive_directories.zip", []string{"root/baby_slime.png", "root/subdirectory/go_piece.jpg", "gopher.png"}},
 	}
 
 	for _, testCase := range testCases {
