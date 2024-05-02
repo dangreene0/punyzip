@@ -15,14 +15,16 @@ func TestExtractZip(t *testing.T) {
 	}
 
 	for _, testCase := range testCases {
-		err := ExtractZip(testCase.input)
+		err := ExtractZip("../../" + testCase.input)
 		if err != nil {
 			t.Errorf(err.Error())
 		}
-		_, err = os.Stat("example/" + testCase.expected[0])
-
-		if err != nil {
-			t.Errorf("Expected %q, got none", "example/"+testCase.expected[0])
+		for _, item := range testCase.expected {
+			_, err = os.Stat("../../" + item)
+			if err != nil {
+				t.Errorf("Expected %q, got none", item)
+			}
 		}
+
 	}
 }

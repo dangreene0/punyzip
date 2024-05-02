@@ -2,8 +2,24 @@ package extract
 
 import (
 	"errors"
+	"fmt"
 	"strings"
+
+	"github.com/spf13/cobra"
 )
+
+var ExtractCmd = &cobra.Command{
+	Use:   "x",
+	Short: "extracts files.",
+	Long:  `extracts a file.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		msg, err := DetectFormat(args[0])
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(msg)
+	},
+}
 
 // make this take a pointer of the file
 // :shrug:

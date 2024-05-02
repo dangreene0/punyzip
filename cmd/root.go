@@ -9,7 +9,7 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "punyzip",
+	Use:   "pz",
 	Short: "A tiny archive extractor.",
 	Long:  "A tiny archive extractor that supports zip, 7z, rar, tar and tar.gz files.",
 	Run: func(cmd *cobra.Command, args []string) {
@@ -23,12 +23,13 @@ var rootCmd = &cobra.Command{
 			os.Exit(0)
 		}
 		fmt.Println(msg)
-
 	},
 }
 
 func init() {
 	rootCmd.CompletionOptions.DisableDefaultCmd = true
+	rootCmd.AddCommand(extract.ExtractCmd)
+
 }
 
 func Execute() {
