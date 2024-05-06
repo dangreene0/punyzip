@@ -20,7 +20,6 @@ func ExtractZip(archive string) error {
 			return err
 		}
 	}
-
 	return nil
 }
 

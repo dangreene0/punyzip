@@ -21,7 +21,6 @@ func ExtractSevenZip(archive string) error {
 			return err
 		}
 	}
-
 	return nil
 }
 

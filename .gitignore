@@ -3,3 +3,5 @@
 punyzip
 pz
 examples/*
+*.jpg
+*.png
