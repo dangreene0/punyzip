@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/dangreene0/punyzip/cmd"
 	"github.com/dangreene0/punyzip/extract"
 	"github.com/spf13/cobra"
 )
@@ -33,6 +34,7 @@ var rootCmd = &cobra.Command{
 func init() {
 	rootCmd.CompletionOptions.DisableDefaultCmd = true
 	rootCmd.AddCommand(extract.ExtractCmd)
+	rootCmd.AddCommand(cmd.VersionCmd)
 
 }
 
